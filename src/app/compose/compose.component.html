@@ -1,0 +1,12 @@
+<ActionBar title="Compose" class="action-bar">
+    <NavigationButton ios:visibility="collapsed" text="Compose" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+</ActionBar>
+
+<FlexboxLayout flexDirection="column" class="page">
+    <StackLayout class="m-15">
+            <TextField type="email" required hint="To..." [(ngModel)]="textEmail"></TextField>
+            <TextView  style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="1000px" hint="Write your email here"  returnKeyType="send" class="input input-border"></TextView>
+    </StackLayout>
+</FlexboxLayout>
+
+<FAB (tap)="send()" icon="res://baseline_send_white_18" rippleColor="#f1f1f1" class="fab-button"></FAB>
