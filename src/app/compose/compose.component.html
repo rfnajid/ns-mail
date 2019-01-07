@@ -1,12 +1,22 @@
 <ActionBar title="Compose" class="action-bar">
     <NavigationButton ios:visibility="collapsed" text="Compose" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <ActionItem icon="res://baseline_send_white_18" (tap)="send()"></ActionItem>
 </ActionBar>
 
 <FlexboxLayout flexDirection="column" class="page">
-    <StackLayout class="m-15">
-            <TextField type="email" required hint="To..." [(ngModel)]="textEmail"></TextField>
-            <TextView  style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="1000px" hint="Write your email here"  returnKeyType="send" class="input input-border"></TextView>
+    <StackLayout class="form" #form>
+        <StackLayout>
+                <TextField #reciever #recieverModel="ngModel" required email hint="Recepient" [(ngModel)]="textReciever" class="input"></TextField>
+                <TextField #subject #subjectModel="ngModel" type="text" required hint="Subject" [(ngModel)]="textSubject" class="input"></TextField>
+                <TextView  #content #contentModel="ngModel" style="margin-top: 15px" borderColor="#DEDEDE" borderWidth="1" height="1000px" class="input" [(ngModel)]="textContent" hint="Write your email here" returnKeyType="send" class="input input-border"></TextView>
+        </StackLayout>
+        <StackLayout>
+        
+        <StackLayout *ngIf="recieverModel.errors && (recieverModel.dirty || recieverModel.touched)">
+            <Label *ngIf="recieverModel.errors.required" text="- Recepient is required -"></Label>
+            <Label *ngIf="recieverModel.errors.email" text="- Email must be valid -"></Label>
+        </StackLayout>
+        
+        </StackLayout>
     </StackLayout>
 </FlexboxLayout>
-
-<FAB (tap)="send()" icon="res://baseline_send_white_18" rippleColor="#f1f1f1" class="fab-button"></FAB>

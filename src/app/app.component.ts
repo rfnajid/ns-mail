@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, NgModule, NO_ERRORS_SCHEMA, OnInit, ViewChild } from "@angular/core";
 import { NavigationEnd, Router } from "@angular/router";
 import { registerElement } from "nativescript-angular/element-registry";
 import { RouterExtensions } from "nativescript-angular/router";

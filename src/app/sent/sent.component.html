@@ -19,7 +19,7 @@
     <StackLayout class="page">
         <ListView [items]="items" class="list-group">
             <ng-template let-item="item">
-                <Label [nsRouterLink]="['/detail/sent', item.id]" [text]="item.title"
+                <Label [nsRouterLink]="['/detail/sent', item.id]" [text]="item.subject"
                     class="list-group-item"></Label>
             </ng-template>
         </ListView>

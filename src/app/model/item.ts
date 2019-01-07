@@ -1,8 +1,8 @@
 export interface Item {
     id: number;
-    title: string;
+    subject: string;
     content: string;
-    /*sender: string;
+    sender: string;
     reciever: string;
-    date: string;*/
+    date: string;
 }
