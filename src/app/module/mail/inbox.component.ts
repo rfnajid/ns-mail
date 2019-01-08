@@ -2,8 +2,8 @@ import { Component, OnInit } from "@angular/core";
 
 import { RadSideDrawer, SideDrawerLocation } from "nativescript-ui-sidedrawer";
 import * as app from "tns-core-modules/application";
-import { Item } from "../model/item";
-import { ItemService } from "../model/item.service";
+import { Item } from "~/app/model/item";
+import { ItemService } from "~/app/model/item.service";
 
 @Component({
     selector: "Inbox",

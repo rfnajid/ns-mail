@@ -11,6 +11,7 @@ import * as app from "tns-core-modules/application";
     selector: "ns-app",
     templateUrl: "app.component.html"
 })
+
 export class AppComponent implements OnInit {
     private _activatedUrl: string;
     private _sideDrawerTransition: DrawerTransitionBase;

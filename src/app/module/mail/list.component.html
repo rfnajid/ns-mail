@@ -1,0 +1,12 @@
+<GridLayout class="page page-content">
+    <StackLayout class="page">
+            <PullToRefresh (refresh)="refreshList($event)">
+                <ListView [items]="items" class="list-group">
+                    <ng-template let-item="item">
+                        <Label [nsRouterLink]="['/detail/inbox', item.id]" [text]="item.subject"
+                            class="list-group-item"></Label>
+                    </ng-template>
+                </ListView>
+            </PullToRefresh>
+    </StackLayout>
+</GridLayout>

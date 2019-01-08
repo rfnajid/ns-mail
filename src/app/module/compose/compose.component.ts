@@ -5,8 +5,8 @@ import { RadSideDrawer } from "nativescript-ui-sidedrawer";
 import { View } from "ui/core/view";
 import { Page } from "ui/page";
 
-import { Item } from "../model/item";
-import { ItemService } from "../model/item.service";
+import { Item } from "~/app/model/item";
+import { ItemService } from "~/app/model/item.service";
 
 import * as app from "tns-core-modules/application";
 

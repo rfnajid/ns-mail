@@ -26,6 +26,8 @@ package-lock.json
 tests/app/**/*.js
 tests/test-output.txt
 ng-sample/app/**/*.js
+src/**/*.js
+src/*.js
 
 # Webpack configuration files
 webpack.config.js

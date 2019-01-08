@@ -1,19 +1,21 @@
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NativeScriptCommonModule } from "nativescript-angular/common";
 
-import { InboxRoutingModule } from "./inbox-routing.module";
 import { InboxComponent } from "./inbox.component";
+import { ListComponent } from "./list.component";
+import { MailRoutingModule } from "./mail-routing.module";
 
 @NgModule({
     imports: [
         NativeScriptCommonModule,
-        InboxRoutingModule
+        MailRoutingModule
     ],
     declarations: [
-        InboxComponent
+        InboxComponent,
+        ListComponent
     ],
     schemas: [
         NO_ERRORS_SCHEMA
     ]
 })
-export class InboxModule { }
+export class MailModule { }

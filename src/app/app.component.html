@@ -7,13 +7,13 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
     <GridLayout tkDrawerContent rows="auto, *" class="sidedrawer sidedrawer-left">
         <StackLayout row="0" class="sidedrawer-header">
             <Label class="sidedrawer-header-image fa" text="&#xf2bd;"></Label>
-            <Label class="sidedrawer-header-brand" text="User Name"></Label>
+            <Label class="sidedrawer-header-brand" text="Name"></Label>
             <Label class="footnote" text="username@mail.com"></Label>
         </StackLayout>
     
         <ScrollView row="1">
             <StackLayout class="sidedrawer-content">
-                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/inbox')" (tap)="onNavItemTap('/inbox')">
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/mail/inbox')" (tap)="onNavItemTap('/mail/inbox')">
                     <Label col="0" text="&#xf01c;" class="fa"></Label>
                     <Label col="1" text="Inbox" class="p-r-10"></Label>
                 </GridLayout>

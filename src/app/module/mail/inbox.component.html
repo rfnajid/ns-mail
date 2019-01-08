@@ -15,17 +15,6 @@
     <Label class="action-bar-title" text="Inbox"></Label>
 </ActionBar>
 
-<GridLayout class="page page-content">
-    <StackLayout class="page">
-            <PullToRefresh (refresh)="refreshList($event)">
-                <ListView [items]="items" class="list-group">
-                    <ng-template let-item="item">
-                        <Label [nsRouterLink]="['/detail/inbox', item.id]" [text]="item.subject"
-                            class="list-group-item"></Label>
-                    </ng-template>
-                </ListView>
-            </PullToRefresh>
-    </StackLayout>
-</GridLayout>
+<List [type]="'inbox'"></List>
 
 <FAB [nsRouterLink]="['/compose']" icon="res://ic_add_white" rippleColor="#f1f1f1" class="fab-button"></FAB>
