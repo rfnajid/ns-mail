@@ -18,17 +18,17 @@ http://docs.telerik.com/devtools/nativescript-ui/Controls/NativeScript/SideDrawe
                     <Label col="1" text="Inbox" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/sent')" (tap)="onNavItemTap('/sent')">
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/mail/sent')" (tap)="onNavItemTap('/mail/sent')">
                     <Label col="0" text="&#xf064;" class="fa"></Label>
                     <Label col="1" text="Sent" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/draft')" (tap)="onNavItemTap('/draft')">
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/mail/draft')" (tap)="onNavItemTap('/mail/draft')">
                     <Label col="0" text="&#xf044;" class="fa"></Label>
                     <Label col="1" text="Draft" class="p-r-10"></Label>
                 </GridLayout>
 
-                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/featured')" (tap)="onNavItemTap('/featured')">
+                <GridLayout columns="auto, *" class="sidedrawer-list-item" [class.selected]="isComponentSelected('/mail/featured')" (tap)="onNavItemTap('/mail/featured')">
                     <Label col="0" text="&#xf005;" class="fa"></Label>
                     <Label col="1" text="Featured" class="p-r-10"></Label>
                 </GridLayout>

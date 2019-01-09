@@ -1,0 +1,8 @@
+<ActionBar [title]="item.subject" class="action-bar">
+    <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+</ActionBar>
+<FlexboxLayout flexDirection="column" class="page">
+    <FlexboxLayout class="m-15">
+        <Label class="h4" [text]="item.content"></Label>
+    </FlexboxLayout>
+</FlexboxLayout>

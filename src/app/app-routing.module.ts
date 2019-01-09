@@ -9,8 +9,8 @@ const routes: Routes = [
     { path: "draft", loadChildren: "~/app/draft/draft.module#draftModule" },
     { path: "featured", loadChildren: "~/app/featured/featured.module#FeaturedModule" },
     { path: "settings", loadChildren: "~/app/settings/settings.module#SettingsModule" },
-    { path: "detail", loadChildren: "~/app/detail/detail.module#DetailModule"},
-    { path: "compose", loadChildren: "~/app/module/compose/compose.module#ComposeModule"}
+    { path: "detail", loadChildren: "~/app/module/detail/detail.module#DetailModule" },
+    { path: "compose", loadChildren: "~/app/module/compose/compose.module#ComposeModule" }
 ];
 
 @NgModule({

@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
         .subscribe((event: NavigationEnd) => this._activatedUrl = event.urlAfterRedirects);
 
         registerElement("Fab", () => require("nativescript-floatingactionbutton").Fab);
-        registerElement("PullToRefresh", () => require("nativescript-pulltorefresh").PullToRefresh);
     }
 
     get sideDrawerTransition(): DrawerTransitionBase {

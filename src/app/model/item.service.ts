@@ -46,7 +46,27 @@ export class ItemService {
         { id: 9, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""}
     );
 
+    private draft = new Array<Item>(
+        { id: 1, subject: "Kurororo", content: "Sua test", sender: "", reciever: "", date: ""},
+        { id: 2, subject: "EMail", content: "Sent EMAIL", sender: "", reciever: "", date: ""},
+        { id: 3, subject: "John", content: "Healoo", sender: "", reciever: "", date: ""},
+        { id: 4, subject: "Yahya", content: "Coba", sender: "", reciever: "", date: ""},
+        { id: 5, subject: "InXuberi xccx email", content: "iya", sender: "", reciever: "", date: ""},
+        { id: 6, subject: "Ulysss", content: "siap", sender: "", reciever: "", date: ""},
+        { id: 7, subject: "asda", content: "xzcxz", sender: "", reciever: "", date: ""},
+        { id: 8, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
+        { id: 9, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""}
+    );
+
+    private featured = new Array<Item>(
+        { id: 1, subject: "Kurororo", content: "Sua test", sender: "", reciever: "", date: ""},
+        { id: 2, subject: "asda", content: "Sent EMAIL", sender: "", reciever: "", date: ""},
+        { id: 3, subject: "12312312", content: "Healoo", sender: "", reciever: "", date: ""}
+    );
+
     getInboxItems(): Array<Item> {
+        console.log("item count : " + this.inbox.length);
+
         return this.inbox;
     }
 
@@ -55,6 +75,8 @@ export class ItemService {
     }
 
     getSentItems(): Array<Item> {
+        console.log("item count : " + this.sent.length);
+
         return this.sent;
     }
 
@@ -62,11 +84,23 @@ export class ItemService {
         return this.sent.filter((item) => item.id === id)[0];
     }
 
-    isEmailTargetValid(email: Item): boolean {
-        // tslint:disable-next-line:max-line-length
-        const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
-        const valid = emailRegEx.test(email.reciever);
+    getDraftItems(): Array<Item> {
+        console.log("item count : " + this.draft.length);
 
-        return valid ? null : true;
+        return this.draft;
+    }
+
+    getDraftItem(id: number): Item {
+        return this.draft.filter((item) => item.id === id)[0];
+    }
+
+    getFeaturedItems(): Array<Item> {
+        console.log("item count : " + this.featured.length);
+
+        return this.featured;
+    }
+
+    getFeaturedItem(id: number): Item {
+        return this.featured.filter((item) => item.id === id)[0];
     }
 }
