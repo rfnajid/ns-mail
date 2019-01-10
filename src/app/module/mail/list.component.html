@@ -16,12 +16,26 @@
 </ActionBar>
 
 <GridLayout class="page page-content">
-    <RadListView class="list-group" [items]="items" pullToRefresh="true" (pullToRefreshInitiated)="refreshList($event)"
+    <RadListView #listView class="list-group" [items]="items"
+        pullToRefresh="true" (pullToRefreshInitiated)="refreshList($event)"
+        (itemSwipeProgressEnded)="onSwipeCellFinished($event)"
+        (itemSwipeProgressStarted)="onSwipeCellStarted($event)" (itemSwipeProgressChanged)="onCellSwiping($event)" swipeActions="true"
         *ngIf="items?.length > 0" loadOnDemandMode="Auto" (loadMoreDataRequested)="loadMore($event)">
+
         <ng-template tkListItemTemplate let-item="item">
-            <Label [nsRouterLink]="['/detail', type, item.id]" [text]="item.subject"
-                class="list-group-item"></Label>
+            <StackLayout class="listItemStackLayout" orientation="vertical">
+                <Label [nsRouterLink]="['/detail', type, item.id]" [text]="item.subject" class="list-group-item"></Label>
+            </StackLayout>
         </ng-template>
+
+        <GridLayout *tkListItemSwipeTemplate columns="auto, *, auto" class="gridLayoutLayout">
+                <StackLayout id="featured-view" col="0" class="featuredViewStackLayout" (tap)="onLeftSwipeClick($event)">
+                   <Label text="&#xf005;" class="fa swipeTemplateLabel" verticalAlignment="center" horizontalAlignment="center"></Label>
+               </StackLayout>
+               <StackLayout id="delete-view" col="2" class="deleteViewStackLayout" (tap)="onRightSwipeClick($event)">
+                   <Label text="&#xf1f8;" class=" fa swipeTemplateLabel" verticalAlignment="center" horizontalAlignment="center"></Label>
+               </StackLayout>
+           </GridLayout>
     </RadListView>
 </GridLayout>
 

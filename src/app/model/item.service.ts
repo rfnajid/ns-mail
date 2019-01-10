@@ -1,103 +1,82 @@
 import { Injectable } from "@angular/core";
-
 import { Item } from "./item";
 
 @Injectable({
     providedIn: "root"
 })
 export class ItemService {
-    private inbox = new Array<Item>(
-        { id: 1, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
-        { id: 2, subject: "Unique", content: "Unique EMAIL", sender: "", reciever: "", date: ""},
-        { id: 3, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""},
-        { id: 4, subject: "Coba", content: "Coba", sender: "", reciever: "", date: ""},
-        { id: 5, subject: "Ini adalah email", content: "iya", sender: "", reciever: "", date: ""},
-        { id: 6, subject: "sdfasdf", content: "siap", sender: "", reciever: "", date: ""},
-        { id: 7, subject: "xcxcxcx", content: "xzcxz", sender: "", reciever: "", date: ""},
-        { id: 8, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
-        { id: 9, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""},
-        { id: 10, subject: "Coba", content: "Coba", sender: "", reciever: "", date: ""},
-        { id: 11, subject: "Ini adalah email", content: "iya", sender: "", reciever: "", date: ""},
-        { id: 12, subject: "sdfasdf", content: "siap", sender: "", reciever: "", date: ""},
-        { id: 13, subject: "xcxcxcx", content: "xzcxz", sender: "", reciever: "", date: ""},
-        { id: 14, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
-        { id: 15, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""},
-        { id: 16, subject: "Coba", content: "Coba", sender: "", reciever: "", date: ""},
-        { id: 17, subject: "Ini adalah email", content: "iya", sender: "", reciever: "", date: ""},
-        { id: 18, subject: "sdfasdf", content: "siap", sender: "", reciever: "", date: ""},
-        { id: 19, subject: "xcxcxcx", content: "xzcxz", sender: "", reciever: "", date: ""},
-        { id: 20, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
-        { id: 21, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""},
-        { id: 22, subject: "Coba", content: "Coba", sender: "", reciever: "", date: ""},
-        { id: 23, subject: "Ini adalah email", content: "iya", sender: "", reciever: "", date: ""},
-        { id: 24, subject: "sdfasdf", content: "siap", sender: "", reciever: "", date: ""},
-        { id: 25, subject: "xcxcxcx", content: "xzcxz", sender: "", reciever: "", date: ""}
-    );
 
-    private sent = new Array<Item>(
-        { id: 1, subject: "Syara", content: "Sua test", sender: "", reciever: "", date: ""},
-        { id: 2, subject: "Sent", content: "Sent EMAIL", sender: "", reciever: "", date: ""},
-        { id: 3, subject: "Roblo", content: "Healoo", sender: "", reciever: "", date: ""},
-        { id: 4, subject: "lla", content: "Coba", sender: "", reciever: "", date: ""},
-        { id: 5, subject: "Ini xccx email", content: "iya", sender: "", reciever: "", date: ""},
-        { id: 6, subject: "xcxcxcxcx", content: "siap", sender: "", reciever: "", date: ""},
-        { id: 7, subject: "asda", content: "xzcxz", sender: "", reciever: "", date: ""},
-        { id: 8, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
-        { id: 9, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""}
-    );
+    loadPagination: number = 13;
 
-    private draft = new Array<Item>(
-        { id: 1, subject: "Kurororo", content: "Sua test", sender: "", reciever: "", date: ""},
-        { id: 2, subject: "EMail", content: "Sent EMAIL", sender: "", reciever: "", date: ""},
-        { id: 3, subject: "John", content: "Healoo", sender: "", reciever: "", date: ""},
-        { id: 4, subject: "Yahya", content: "Coba", sender: "", reciever: "", date: ""},
-        { id: 5, subject: "InXuberi xccx email", content: "iya", sender: "", reciever: "", date: ""},
-        { id: 6, subject: "Ulysss", content: "siap", sender: "", reciever: "", date: ""},
-        { id: 7, subject: "asda", content: "xzcxz", sender: "", reciever: "", date: ""},
-        { id: 8, subject: "Tes", content: "Email test", sender: "", reciever: "", date: ""},
-        { id: 9, subject: "Haloo", content: "Healoo", sender: "", reciever: "", date: ""}
-    );
+    private inbox = new Array<Item>();
+    private sent = new Array<Item>();
+    private draft = new Array<Item>();
+    private featured = new Array<Item>();
 
-    private featured = new Array<Item>(
-        { id: 1, subject: "Kurororo", content: "Sua test", sender: "", reciever: "", date: ""},
-        { id: 2, subject: "asda", content: "Sent EMAIL", sender: "", reciever: "", date: ""},
-        { id: 3, subject: "12312312", content: "Healoo", sender: "", reciever: "", date: ""}
-    );
+    constructor() {
+        this.generate("inbox", 19);
+        this.generate("sent", 50);
+        this.generate("draft", 20);
+        this.generate("featured", 1000);
+    }
 
-    getInboxItems(): Array<Item> {
+    generate(type: string, size: number): void {
+        for (let i: number = 1; i < size; i++) {
+            const item: Item = {
+                id: i,
+                subject: "Email " + type.toUpperCase() + " #" + i,
+                content: "This is the content of " + type.toUpperCase() + " number " + i,
+                sender: "sender@gmail.com",
+                reciever: "reciever@gmail.com",
+                date: "20-12-2012"
+            };
+
+            if (type === "inbox") {
+                this.inbox.push(item);
+            } else if (type === "sent") {
+                this.sent.push(item);
+            } else if (type === "draft") {
+                this.draft.push(item);
+            } else if (type === "featured") {
+                this.featured.push(item);
+            }
+        }
+    }
+
+    getInboxItems(index: number = 1): Array<Item> {
         console.log("item count : " + this.inbox.length);
 
-        return this.inbox;
+        return this.inbox.slice(this.loadPagination * (index - 1), this.loadPagination * index);
     }
 
     getInboxItem(id: number): Item {
         return this.inbox.filter((item) => item.id === id)[0];
     }
 
-    getSentItems(): Array<Item> {
+    getSentItems(index: number = 1): Array<Item> {
         console.log("item count : " + this.sent.length);
 
-        return this.sent;
+        return this.sent.slice(this.loadPagination * (index - 1), this.loadPagination * index);
     }
 
     getSentItem(id: number): Item {
         return this.sent.filter((item) => item.id === id)[0];
     }
 
-    getDraftItems(): Array<Item> {
+    getDraftItems(index: number = 1): Array<Item> {
         console.log("item count : " + this.draft.length);
 
-        return this.draft;
+        return this.draft.slice(this.loadPagination * (index - 1), this.loadPagination * index);
     }
 
     getDraftItem(id: number): Item {
         return this.draft.filter((item) => item.id === id)[0];
     }
 
-    getFeaturedItems(): Array<Item> {
+    getFeaturedItems(index: number = 1): Array<Item> {
         console.log("item count : " + this.featured.length);
 
-        return this.featured;
+        return this.featured.slice(this.loadPagination * (index - 1), this.loadPagination * index);
     }
 
     getFeaturedItem(id: number): Item {

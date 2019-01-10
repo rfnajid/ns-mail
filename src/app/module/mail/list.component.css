@@ -1,0 +1,40 @@
+.listItemStackLayout {
+    background-color: white;
+    padding-left: 5;
+}
+
+.labelName {
+    font-size: 20;
+    margin-bottom: 8;
+}
+
+.labelTitle {
+    font-size: 14;
+    font-weight: bold;
+}
+
+.labelText {
+    font-size: 12;
+}
+
+.featuredViewStackLayout {
+    background-color: blue;
+    padding: 16;
+    color: white;
+    font-size: 20px;
+}
+
+.deleteViewStackLayout {
+    background-color: red;
+    padding: 16;
+    color: white;
+    font-size: 20px;
+}
+
+.gridLayoutLayout {
+    background-color: white;
+}
+
+.swipeTemplateLabel {
+    size: 20;
+}

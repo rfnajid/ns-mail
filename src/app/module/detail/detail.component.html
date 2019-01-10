@@ -1,5 +1,7 @@
 <ActionBar [title]="item.subject" class="action-bar">
     <NavigationButton ios:visibility="collapsed" android.systemIcon="ic_menu_back" (tap)="goBack()"></NavigationButton>
+    <ActionItem (tap)="delete()" ios.systemIcon="16" ios.position="right" text="Delete" android.position="popup" class="action-item"></ActionItem>
+    <ActionItem (tap)="featured()" ios.systemIcon="11" ios.position="right" text="Featured" android.position="popup" class="action-item"></ActionItem>
 </ActionBar>
 <FlexboxLayout flexDirection="column" class="page">
     <FlexboxLayout class="m-15">

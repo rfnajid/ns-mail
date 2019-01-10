@@ -8,7 +8,8 @@ import { ItemService } from "~/app/model/item.service";
 @Component({
     selector: "detail-item",
     moduleId: module.id,
-    templateUrl: "./detail.component.html"
+    templateUrl: "./detail.component.html",
+    styleUrls : ["detail.component.css"]
 })
 
 export class DetailComponent implements OnInit, OnDestroy {
