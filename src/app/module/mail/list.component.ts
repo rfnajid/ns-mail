@@ -8,7 +8,7 @@ import { View } from "tns-core-modules/ui/core/view";
 
 import { ListViewEventData } from "nativescript-ui-listview";
 import { RadListViewComponent } from "nativescript-ui-listview/angular/listview-directives";
-import { layout } from "tns-core-modules/utils/utils";
+import { DBService } from "~/app/model/db.service";
 import { Item } from "~/app/model/item";
 import { ItemService } from "~/app/model/item.service";
 
@@ -37,14 +37,16 @@ export class ListComponent implements OnInit, OnDestroy {
     private rightItem: View;
     private mainView: View;
 
-    constructor(private itemService: ItemService, private route: ActivatedRoute) { }
+    constructor(private itemService: ItemService, private route: ActivatedRoute, private db: DBService) { }
 
     ngOnInit(): void {
         // Init your component properties here.
         this.sub = this.route.data.subscribe(
               (v) => this.type = v.type
         );
-        this.newLoad();
+
+        // this.newLoad();
+        this.db.insert(this.itemService.getInboxItem(6), "inbox");
     }
 
     ngOnDestroy(): void {
@@ -57,7 +59,8 @@ export class ListComponent implements OnInit, OnDestroy {
         let items: Array<Item>;
 
         if (this.type === "inbox") {
-            items = this.itemService.getInboxItems(this.page);
+            // items = this.itemService.getInboxItems(this.page);
+            items = this.db.fetch("inbox");
         } else if (this.type === "sent") {
             items = this.itemService.getSentItems(this.page);
         } else if (this.type === "draft") {

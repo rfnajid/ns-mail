@@ -4,6 +4,7 @@ import { Item } from "./item";
 @Injectable({
     providedIn: "root"
 })
+
 export class ItemService {
 
     loadPagination: number = 13;
