@@ -45,8 +45,8 @@ export class ListComponent implements OnInit, OnDestroy {
               (v) => this.type = v.type
         );
 
-        // this.newLoad();
         this.db.insert(this.itemService.getInboxItem(6), "inbox");
+        this.newLoad();
     }
 
     ngOnDestroy(): void {
@@ -56,20 +56,25 @@ export class ListComponent implements OnInit, OnDestroy {
     loadData(): void {
         console.log("load data : " + this.type);
 
-        let items: Array<Item>;
+        let fetch: Promise<any>;
 
         if (this.type === "inbox") {
-            // items = this.itemService.getInboxItems(this.page);
-            items = this.db.fetch("inbox");
+            fetch = this.db.fetch("inbox");
         } else if (this.type === "sent") {
-            items = this.itemService.getSentItems(this.page);
+            fetch = this.db.fetch("sent");
         } else if (this.type === "draft") {
-            items = this.itemService.getDraftItems(this.page);
+            fetch = this.db.fetch("draft");
         } else if (this.type === "featured") {
-            items = this.itemService.getFeaturedItems(this.page);
+            fetch = this.db.fetch("featured");
         }
 
-        this.items = this.items.concat(items);
+        fetch.then((data) => {
+            if (data) {
+                console.log("data catched : ");
+                console.log(this.json.stringify(this.items.concat(data)));
+                this.items = this.items.concat(data);
+            }
+        });
      }
 
     onDrawerButtonTap(): void {
