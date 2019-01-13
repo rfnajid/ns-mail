@@ -45,7 +45,7 @@ export class ListComponent implements OnInit, OnDestroy {
               (v) => this.type = v.type
         );
 
-        this.db.insert(this.itemService.getInboxItem(6), "inbox");
+        // this.db.insert(this.itemService.getInboxItem(6), "inbox");
         this.newLoad();
     }
 

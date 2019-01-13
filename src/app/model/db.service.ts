@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
 import { Item } from "./item";
 
 const sqlite = require("nativescript-sqlite");
@@ -15,6 +14,7 @@ export class DBService {
     constructor() {
         //
         (new sqlite("mail.db")).then((db) => {
+            db.execSQL("PRAGMA foreign_keys = on");
             db.execSQL("CREATE TABLE IF NOT EXISTS mail (\
                 id INTEGER PRIMARY KEY AUTOINCREMENT,\
                 subject text,\
@@ -22,22 +22,30 @@ export class DBService {
                 sender text,\
                 reciever text,\
                 date text,\
-                type text)").then((id) => {this.database = db;
+                type text);\
+                CREATE TABLE IF NOT EXISTS featured (\
+                    id INTEGER PRIMARY KEY,\
+                    type").then((id) => {this.database = db;
                 }, (error) => {
                     console.log("CREATE TABLE mail ERROR " + error);
                 });
+            db.execSQL("CREATE TABLE IF NOT EXISTS featured (\
+                featid INTEGER,\
+                type text,\
+                FOREIGN KEY (featid) REFERENCES mail(id))").then((id) => {
+                    //
+                }, (error) => {
+                    console.log("CREATE TABLE featured ERROR " + error);
+                });
         });
+
     }
 
     insert(item: Item, type: string) {
         this.database.execSQL("INSERT INTO mail (subject,content,sender,reciever,date,type)\
         values (?,?,?,?,?,?)", [item.subject, item.content, item.sender, item.reciever, item.date, type]);
     }
-/*
-    fetch = (type: string) => {
-        console.log("trying to fetch : " + type);
-    }
-*/
+
     fetch(type: string): Promise<any> {
         console.log("trying to fetch : " + type);
 
@@ -65,16 +73,26 @@ export class DBService {
         });
     }
 
-    get(type: string, id: number): Promise<any> {
-        return this.database.all("SELECT * from mail where type=? and id=?", type, id).then((row) => {
+    fetchFeat() {
+        //
+    }
+
+    get(id: number, type: string): Promise<any> {
+        console.log("trying to get " + type + " id : " + id);
+
+        return this.database.all("SELECT * from mail where id=? and type=?", [id, type]).then((rows) => {
+            console.log("get row : " + JSON.stringify(rows));
+
             const item = {
-                id: row[0],
-                subject: row[1],
-                content: row[2],
-                sender: row[3],
-                reciever: row[4],
-                date: row[5]
+                id: rows[0][0],
+                subject: rows[0][1],
+                content: rows[0][2],
+                sender: rows[0][3],
+                reciever: rows[0][4],
+                date: rows[0][5]
             };
+
+            console.log("get item : " + JSON.stringify(item));
 
             return item;
         }, (error) => {
@@ -82,5 +100,19 @@ export class DBService {
 
             return null;
         });
+    }
+
+    getFeat(id: number): Promise<any> {
+        console.log("get feat");
+
+        return null;
+    }
+
+    delete(id: number) {
+        this.database.execSQL("DELETE FROM mail WHERE id=?", [id]);
+    }
+
+    deleteFeat(id: number) {
+        this.database.execSQL("DELETE FROM featured WHERE id=?", [id]);
     }
 }

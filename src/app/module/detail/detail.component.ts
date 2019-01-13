@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { RouterExtensions } from "nativescript-angular/router";
 
+import { DBService } from "~/app/model/db.service";
 import { Item } from "~/app/model/item";
 import { ItemService } from "~/app/model/item.service";
 
@@ -14,18 +15,21 @@ import { ItemService } from "~/app/model/item.service";
 
 export class DetailComponent implements OnInit, OnDestroy {
     item: Item;
-
     sub: any;
 
     type: string;
 
+    json: any = JSON;
+
     constructor(
         private itemService: ItemService,
+        private db: DBService,
         private route: ActivatedRoute,
         private routerExtensions: RouterExtensions
     ) { }
 
     ngOnInit(): void {
+        this.item = this.itemService.empty();
         this.sub = this.route.data.subscribe(
               (v) => this.type = v.type
         );
@@ -44,14 +48,19 @@ export class DetailComponent implements OnInit, OnDestroy {
         const column = "id";
         const id = +this.route.snapshot.params[column];
 
-        if (this.type === "inbox") {
-            this.item = this.itemService.getInboxItem(id);
-        } else if (this.type === "sent") {
-            this.item = this.itemService.getSentItem(id);
-        } else if (this.type === "draft") {
-            this.item = this.itemService.getDraftItem(id);
-        } else if (this.type === "featured") {
-            this.item = this.itemService.getFeaturedItem(id);
+        this.item.subject = "tes";
+
+        let promise: Promise<any>;
+
+        // tslint:disable-next-line:prefer-conditional-expression
+        if (this.type !== "featured") {
+            promise = this.db.get(id, this.type);
+        } else {
+            promise = this.db.getFeat(id);
         }
+
+        promise.then((item) => {
+            this.item = item;
+        });
     }
 }

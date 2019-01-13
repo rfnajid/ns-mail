@@ -21,6 +21,17 @@ export class ItemService {
         this.generate("featured", 1000);
     }
 
+    empty(): Item {
+        return {
+            id: 0,
+            subject: "",
+            content: "",
+            sender: "",
+            reciever: "",
+            date: ""
+        };
+    }
+
     generate(type: string, size: number): void {
         for (let i: number = 1; i < size; i++) {
             const item: Item = {
