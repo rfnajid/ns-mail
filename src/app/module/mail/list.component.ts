@@ -53,30 +53,6 @@ export class ListComponent implements OnInit, OnDestroy {
         this.sub.unsubscribe();
     }
 
-    loadData(): void {
-        console.log("load data : " + this.type);
-
-        let fetch: Promise<any>;
-
-        if (this.type === "inbox") {
-            fetch = this.db.fetch("inbox");
-        } else if (this.type === "sent") {
-            fetch = this.db.fetch("sent");
-        } else if (this.type === "draft") {
-            fetch = this.db.fetch("draft");
-        } else if (this.type === "featured") {
-            fetch = this.db.fetch("featured");
-        }
-
-        fetch.then((data) => {
-            if (data) {
-                console.log("data catched : ");
-                console.log(this.json.stringify(this.items.concat(data)));
-                this.items = this.items.concat(data);
-            }
-        });
-     }
-
     onDrawerButtonTap(): void {
         const sideDrawer = <RadSideDrawer>app.getRootView();
         sideDrawer.showDrawer();
@@ -97,24 +73,26 @@ export class ListComponent implements OnInit, OnDestroy {
         const swipeLimits = args.data.swipeLimits;
         // tslint:disable-next-line:no-string-literal
         const swipeView = args["object"];
-        const leftItem = swipeView.getViewById<View>("featured-view");
         const rightItem = swipeView.getViewById<View>("delete-view");
-        swipeLimits.left = leftItem.getMeasuredWidth();
+        if (this.isFeatured) {
+            const leftItem = swipeView.getViewById<View>("featured-view");
+            swipeLimits.left = leftItem.getMeasuredWidth();
+        }
         swipeLimits.right = rightItem.getMeasuredWidth();
-        swipeLimits.threshold = leftItem.getMeasuredWidth() / 2;
+        swipeLimits.threshold = rightItem.getMeasuredWidth() / 2;
     }
 
     onSwipeCellFinished(args: ListViewEventData) {
-    //
+    // yes, it's empty
     }
 
-    onLeftSwipeClick(args: EventData) {
-        console.log("Left swipe click");
+    onLeftSwipeClick(itemId: number) {
+        console.log("Left swipe click id : " + itemId);
         this.listViewComponent.listView.notifySwipeToExecuteFinished();
     }
 
-    onRightSwipeClick(args: EventData) {
-        console.log("Right swipe click");
+    onRightSwipeClick(itemId: number) {
+        console.log("Right swipe click id : " + itemId);
         this.listViewComponent.listView.notifySwipeToExecuteFinished();
     }
 
@@ -142,21 +120,43 @@ export class ListComponent implements OnInit, OnDestroy {
         this.loadData();
     }
 
-    private hideOtherSwipeTemplateView(currentSwipeView: string) {
-        switch (currentSwipeView) {
-            case "left":
-                if (this.rightItem.getActualSize().width !== 0) {
-                    // tslint:disable-next-line:max-line-length
-                    View.layoutChild(<View>this.rightItem.parent, this.rightItem, this.mainView.getMeasuredWidth(), 0, this.mainView.getMeasuredWidth(), 0);
-                }
-                break;
-            case "right":
-                if (this.leftItem.getActualSize().width !== 0) {
-                    View.layoutChild(<View>this.leftItem.parent, this.leftItem, 0, 0, 0, 0);
-                }
-                break;
-            default:
-                break;
+    isFeatured(): boolean {
+        return this.type === "featured";
+    }
+
+    loadData(): void {
+        console.log("load data : " + this.type);
+
+        let fetch: Promise<any>;
+
+        if (this.type === "inbox") {
+            fetch = this.db.fetch("inbox");
+        } else if (this.type === "sent") {
+            fetch = this.db.fetch("sent");
+        } else if (this.type === "draft") {
+            fetch = this.db.fetch("draft");
+        } else if (this.isFeatured) {
+            fetch = this.db.fetch("featured");
+        }
+
+        fetch.then((data) => {
+            if (data) {
+                console.log("data catched : ");
+                console.log(this.json.stringify(this.items.concat(data)));
+                this.items = this.items.concat(data);
+            }
+        });
+     }
+
+    featureThis(id: number) {
+        this.db.insertFeat(id, this.type);
+    }
+
+    deleteThis(id: number) {
+        if (this.isFeatured) {
+            this.db.deleteFeat(id);
+        } else {
+            this.db.delete(id);
         }
     }
 }

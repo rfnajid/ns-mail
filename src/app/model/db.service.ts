@@ -46,6 +46,10 @@ export class DBService {
         values (?,?,?,?,?,?)", [item.subject, item.content, item.sender, item.reciever, item.date, type]);
     }
 
+    insertFeat(id: number, type: string) {
+        this.database.execSQL("INSERT INTO featured (featid,type) values (?,?)", id, type);
+    }
+
     fetch(type: string): Promise<any> {
         console.log("trying to fetch : " + type);
 
@@ -74,7 +78,31 @@ export class DBService {
     }
 
     fetchFeat() {
-        //
+
+        return this.database.all("SELECT * FROM mail where type IN \
+        (select featid from featured)").then((rows) => {
+            const items: Array<Item> = [];
+
+            // tslint:disable-next-line:forin
+            for (const row in rows) {
+                items.push({
+                   id: rows[row][0],
+                   subject: rows[row][1],
+                   content: rows[row][2],
+                   sender: rows[row][3],
+                   reciever: rows[row][4],
+                   date: rows[row][5]
+                });
+            }
+            console.log("fetching featured found data : " + items.length);
+
+            return items;
+        }, (error) => {
+            console.log("FETCHING ERROR", error);
+
+            return null;
+        });
+
     }
 
     get(id: number, type: string): Promise<any> {
@@ -100,12 +128,6 @@ export class DBService {
 
             return null;
         });
-    }
-
-    getFeat(id: number): Promise<any> {
-        console.log("get feat");
-
-        return null;
     }
 
     delete(id: number) {
